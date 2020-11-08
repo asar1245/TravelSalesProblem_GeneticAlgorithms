@@ -66,5 +66,3 @@ def distance():
     sumOfSquares = diffx**2 + diffy**2 + diffz**2
     sqrtOfSquares = np.sqrt(sumOfSquares)
     print("Distances between Romania cities (km): ", sqrtOfSquares/1000)
-
-distance()
