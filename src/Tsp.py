@@ -14,8 +14,6 @@ from deap import base
 from deap import creator
 from deap import tools
 
-# number of cities
-numCities = 9
 # get cities dataFrame, (x,y,z), with geo centric coordinates
 pdCities = geoVals()
 citiesMatrix = pdCities.to_numpy()
@@ -23,6 +21,9 @@ citiesMatrix = citiesMatrix / 1000  # to set scale to km
 x = citiesMatrix[0]
 y = citiesMatrix[1]
 z = citiesMatrix[2]
+
+# number of cities
+_, numCities = citiesMatrix.shape
 
 # We want to minimize the distance so the weights have to be negative
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
@@ -79,7 +80,7 @@ def main():  # start with a population of 300 individuals
     hof = tools.HallOfFame(2)
     # use one of the built in GA's with a probablilty of mating of 0.7
     # a probability of mutating 0.2 and 140 generations.
-    algorithms.eaSimple(pop, toolbox, 0.7, 0.2, 50, halloffame=hof, )
+    algorithms.eaSimple(pop, toolbox, 0.75, 0.2, 140, halloffame=hof, )
     # plot the best one
     ind = hof[0]
     # make first and last element the same, to close the circle graphically
@@ -104,9 +105,8 @@ def main():  # start with a population of 300 individuals
     # make plot scatter
     plot1Axes.scatter(x, y, z)
     # label points
-    _, numCols = citiesMatrix.shape
     i1 = 0
-    for i1 in range(numCols):  # plot each point + it's index as text above
+    for i1 in range(numCities):  # plot each point + it's index as text above
         plot1Axes.text(citiesMatrix[0, i1], citiesMatrix[1, i1], citiesMatrix[2, i1],
                        '%s' % (citiesNames[i1]), size=12, zorder=1,
                        color='k')
@@ -118,7 +118,7 @@ def main():  # start with a population of 300 individuals
     plt.plot(xAx, yAx, zAx)
     # label second plot
     i2 = 0
-    for i2 in range(numCols):  # plot each point + it's index as text above
+    for i2 in range(numCities):  # plot each point + it's index as text above
         plot2Axes.text(citiesMatrix[0, i2], citiesMatrix[1, i2], citiesMatrix[2, i2],
                        '%s' % (citiesNames[i2]), size=12, zorder=1, color='k')
     # show figure

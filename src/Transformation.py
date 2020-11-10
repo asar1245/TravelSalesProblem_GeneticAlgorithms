@@ -1,13 +1,9 @@
-# Importing libraries
 from math import cos, radians, sin, sqrt
 import pandas as pd
-import numpy as np
 
-# Ellipsoid constants, parameters: semi major axis in metres, reciprocal flattening.
+# Ellipsoid parameters: semi major axis in metres, reciprocal flattening.
 GRS80 = 6378137, 298.257222100882711
 WGS84 = 6378137, 298.257223563
-
-# Function that calculates geocentric coordinates from geodetic data
 
 
 def geodetic_to_geocentric(ellipsoid, latitude, longitude, height):
@@ -30,7 +26,7 @@ def geodetic_to_geocentric(ellipsoid, latitude, longitude, height):
     return x, y, z
 
 
-# Function that retrieves geodetic coordinates from Romania cities
+# returns new pd frame of geocentric values
 def geoVals():
     coordinates = {}
     coordinates["Zerind"] = geodetic_to_geocentric(
@@ -51,5 +47,6 @@ def geoVals():
         WGS84, 47.0458, 21.91833, 131)
     coordinates["Sibiu"] = geodetic_to_geocentric(
         WGS84, 45.8000000, 24.1500000, 410)
+
     coordinates_df = pd.DataFrame(coordinates, index=["x", "y", "z"])
     return coordinates_df
