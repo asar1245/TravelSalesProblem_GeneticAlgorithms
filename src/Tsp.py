@@ -84,8 +84,8 @@ def main():  # start with a population of 300 individuals
     # make first and last element the same, to close the circle graphically
     xAx, yAx, zAx = closePath(ind, x, y, z)
 
-    print('\n\nBest fitness individual:', ind)
-    print('Best fitness distanc: ', f'{round(evalTSP(ind)[0], 3)} meters')
+    print('\nBest fitness individual:', ind)
+    print('Best fitness distance: ', f'{round(evalTSP(ind)[0], 3)} meters\n')
 
     # GRAPHS
     # Figure of two plots
