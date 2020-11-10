@@ -19,6 +19,7 @@ numCities = 9
 # get cities dataFrame, (x,y,z), with geo centric coordinates
 pdCities = geoVals()
 citiesMatrix = pdCities.to_numpy()
+citiesMatrix = citiesMatrix / 1000  # to set scale to km
 x = citiesMatrix[0]
 y = citiesMatrix[1]
 z = citiesMatrix[2]
@@ -85,7 +86,8 @@ def main():  # start with a population of 300 individuals
     xAx, yAx, zAx = closePath(ind, x, y, z)
 
     print('\nBest fitness individual:', ind)
-    print('Best fitness distance: ', f'{round(evalTSP(ind)[0], 3)} meters\n')
+    print('Best fitness distance: ',
+          f'{round(evalTSP(ind)[0], 3)} kilometers\n')
 
     # GRAPHS
     # Figure of two plots
