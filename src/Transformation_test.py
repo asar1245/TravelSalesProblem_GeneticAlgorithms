@@ -106,12 +106,12 @@ def geoVals3():
                 WGS84, 45.8500000, 24.9666700, 420)
     coordinates["Rimnicu_Vilcea"] = geodetic_to_geocentric(
                     WGS84, 45.1000000, 24.3666700, 237)
+    coordinates["Targu_Neamt"] = geodetic_to_geocentric(
+                        WGS84, 47.2000000, 26.3666700, 361)
     coordinates["Pitesti"] = geodetic_to_geocentric(
                 WGS84, 44.8500000, 24.8666700, 307)
     coordinates["Urziceni"] = geodetic_to_geocentric(
                             WGS84, 44.7166700, 26.6333300, 52)
-    coordinates["Targu_Neamt"] = geodetic_to_geocentric(
-                        WGS84, 47.2000000, 26.3666700, 361)
     coordinates["Oradea"] = geodetic_to_geocentric(
                         WGS84, 47.0458, 21.91833, 131)
     coordinates["Zerind"] = geodetic_to_geocentric(
@@ -119,13 +119,20 @@ def geoVals3():
     coordinates_df = pd.DataFrame(coordinates, index=["x", "y", "z"])
     return coordinates_df
 
-print(geoVals1())
+print(geoVals2())
 
-pdCities =geoVals3()
+pdCities =geoVals2()
 citiesMatrix = pdCities.to_numpy()
+
 x = citiesMatrix[0]
+x = np.append(x, x[0])
+print("x: ", x)
 y = citiesMatrix[1]
+y = np.append(y, y[0])
+print("y: ", y)
 z = citiesMatrix[2]
+z = np.append(z, z[0])
+print("z: ", z)
 diffx = np.diff(x)
 print("Diferencia x: ", diffx)
 diffy = np.diff(y)
