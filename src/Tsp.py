@@ -1,6 +1,6 @@
 # Genetic algorithm development
 
-# imports
+# Imports
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # for 3d axis
 import random
@@ -8,13 +8,14 @@ import array
 import numpy as np
 from Transformation import geoVals
 import pandas as pd
-# import all the DEAP parts
+
+# Import all the DEAP parts
 from deap import algorithms
 from deap import base
 from deap import creator
 from deap import tools
 
-# get cities dataFrame, (x,y,z), with geo centric coordinates
+# Get cities dataFrame, (x,y,z), with geo centric coordinates
 pdCities = geoVals()
 citiesMatrix = pdCities.to_numpy()
 citiesMatrix = citiesMatrix / 1000  # to set scale to km
