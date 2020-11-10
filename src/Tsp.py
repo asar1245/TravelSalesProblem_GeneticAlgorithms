@@ -26,7 +26,8 @@ z = citiesMatrix[2]
 # number of cities
 _, numCities = citiesMatrix.shape
 
-# We want to minimize the distance between cities, so the weights have to be negative
+# We want to minimize the distance between cities
+#  so the weights have to be negative
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 
 # We define the individual for the genetic algorithm
@@ -53,6 +54,7 @@ def closePath(individual, indX, indY, indZ):
     zAxis = np.concatenate((indZ[individual], (indZ[individual])[0:1]))
     return xAxis, yAxis, zAxis
 
+
 # Function to calculate the distances between cities and
 # the global path distance
 def evalTSP(individual):
@@ -73,13 +75,12 @@ def evalTSP(individual):
 toolbox.register("evaluate", evalTSP)
 
 
+# main function
 def main():  # start with a population of 300 individuals
     pop = toolbox.population(n=300)
     # only save the very best one
     hof = tools.HallOfFame(1)
-    # get best element
-    hof = tools.HallOfFame(2)
-    # use one of the built in GA's with a probablilty of mating of 0.7
+    # use one of the built in GA's with a probablilty of mating of 0.75
     # a probability of mutating 0.2 and 140 generations.
     algorithms.eaSimple(pop, toolbox, 0.75, 0.2, 140, halloffame=hof, )
     # plot the best one
@@ -124,6 +125,7 @@ def main():  # start with a population of 300 individuals
                        '%s' % (citiesNames[i2]), size=12, zorder=1, color='k')
     # show figure
     plt.show()
+
 
 # run main method
 if __name__ == "__main__":
