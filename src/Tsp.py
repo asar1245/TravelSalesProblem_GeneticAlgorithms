@@ -26,36 +26,35 @@ z = citiesMatrix[2]
 # number of cities
 _, numCities = citiesMatrix.shape
 
-# We want to minimize the distance so the weights have to be negative
+# We want to minimize the distance between cities, so the weights have to be negative
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 
-# For each individual
+# We define the individual for the genetic algorithm
 creator.create("Individual", array.array, typecode='i',
                fitness=creator.FitnessMin)
 toolbox = base.Toolbox()
 
-# Attribute generator
+# Genetic algorithm attributes registration
 toolbox.register("indices", random.sample, range(numCities), numCities)
 toolbox.register("individual", tools.initIterate,
                  creator.Individual, toolbox.indices)
-
-# toolbox.register("individualCreator", tools.initRepeat, creator.Individual, toolbox.indices, 10)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 toolbox.register("mate", tools.cxOrdered)
 toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.05)
 toolbox.register("select", tools.selTournament, tournsize=3)
 
 
-# to make the first and last element the same
-# in order to travel back to same city
-# to calculate well distances and visualization
+# Function to make the first and last element the same
+# in order to travel back to same city and calculate
+# well distances and visualization
 def closePath(individual, indX, indY, indZ):
     xAxis = np.concatenate((indX[individual], (indX[individual])[0:1]))
     yAxis = np.concatenate((indY[individual], (indY[individual])[0:1]))
     zAxis = np.concatenate((indZ[individual], (indZ[individual])[0:1]))
     return xAxis, yAxis, zAxis
 
-
+# Function to calculate the distances between cities and
+# the global path distance
 def evalTSP(individual):
     # close path, to return to same city condition
     xAx, yAx, zAx = closePath(individual, x, y, z)
@@ -69,7 +68,8 @@ def evalTSP(individual):
     return sumDistance,
 
 
-# register evaluate personalized function
+# Register the global path distance as the cos funtion of the
+# genetic algortithm
 toolbox.register("evaluate", evalTSP)
 
 
@@ -124,7 +124,6 @@ def main():  # start with a population of 300 individuals
                        '%s' % (citiesNames[i2]), size=12, zorder=1, color='k')
     # show figure
     plt.show()
-
 
 # run main method
 if __name__ == "__main__":
