@@ -36,7 +36,7 @@ creator.create("Individual", array.array, typecode='i',
 toolbox = base.Toolbox()
 
 # Genetic algorithm attributes registration
-toolbox.register("indices", random.sample, range(numCities), numCities)
+toolbox.register("indices", random.sample, range(numCities-1), numCities-1)
 toolbox.register("individual", tools.initIterate,
                  creator.Individual, toolbox.indices)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
@@ -49,9 +49,15 @@ toolbox.register("select", tools.selTournament, tournsize=3)
 # in order to travel back to same city and calculate
 # well distances and visualization
 def closePath(individual, indX, indY, indZ):
-    xAxis = np.concatenate((indX[individual], (indX[individual])[0:1]))
-    yAxis = np.concatenate((indY[individual], (indY[individual])[0:1]))
-    zAxis = np.concatenate((indZ[individual], (indZ[individual])[0:1]))
+    # last elements
+    l = len(x)
+    xLastElem = x[l-1: l]
+    yLastElem = y[l-1: l]
+    zLastElem = z[l-1: l]
+    # make array round, first and last elements are the same
+    xAxis = np.concatenate((xLastElem, indX[individual], xLastElem))
+    yAxis = np.concatenate((yLastElem, indY[individual], yLastElem))
+    zAxis = np.concatenate((zLastElem, indZ[individual], zLastElem))
     return xAxis, yAxis, zAxis
 
 
